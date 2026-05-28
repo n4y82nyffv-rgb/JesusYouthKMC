@@ -60,6 +60,19 @@
       background: rgba(255, 140, 66, 0.98);
       backdrop-filter: blur(10px);
     }
+    /* Hero image container */
+    .hero-image-container {
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 0 0 40px 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .hero-image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
   </style>
 </head>
 <body class="glossy-orange-bg text-white">
@@ -67,7 +80,7 @@
   <!-- Floating header with curved edges -->
   <header class="fixed top-0 left-0 w-full curved-glass-header z-50 transition-all duration-300">
     <div class="max-w-6xl mx-auto px-5 md:px-8 py-3 flex justify-between items-center">
-      <!-- Logo Image - using original colors -->
+      <!-- Logo Image -->
       <a href="#home" class="flex items-center">
         <img src="logo.png" alt="Jesus Youth KMC Logo" class="h-10 md:h-12 w-auto">
       </a>
@@ -98,9 +111,14 @@
   </header>
 
   <main>
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION with Image -->
     <section id="home" class="min-h-screen flex items-center relative pt-20">
-      <div class="max-w-6xl mx-auto px-5 md:px-8 py-12 md:py-20 text-center md:text-left w-full">
+      <div class="max-w-6xl mx-auto px-5 md:px-8 py-8 md:py-12 w-full">
+        <!-- Hero Image above heading -->
+        <div class="hero-image-container mb-8 md:mb-12 fade-up">
+          <img src="hero-image.jpg" alt="Jesus Youth KMC Ministry" class="hero-image">
+        </div>
+        
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div class="fade-up">
             <p class="text-amber-100 font-semibold tracking-wide text-sm uppercase mb-3">A Campus Ministry under the Jesus Youth Movement</p>
@@ -129,7 +147,7 @@
       </div>
     </section>
 
-    <!-- WEEKLY GATHERING - Fixed visibility with dark overlay -->
+    <!-- WEEKLY GATHERING -->
     <section id="gathering" class="py-20 md:py-28">
       <div class="max-w-5xl mx-auto px-5 md:px-8">
         <div class="text-center mb-12 fade-up">
@@ -251,7 +269,7 @@
             <i class="fab fa-whatsapp"></i>
           </a>
         </div>
-        <p class="mt-6 text-white/60 text-xs">© 2025 Jesus Youth KMC · All glory to God</p>
+        <p class="mt-6 text-white/60 text-xs">© 2026 Jesus Youth KMC · All glory to God</p>
       </div>
     </footer>
   </main>
