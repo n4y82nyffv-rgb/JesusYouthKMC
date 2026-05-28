@@ -1,447 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JESUS YOUTH KMC | Worship & Fellowship</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JESUS YOUTH KMC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #FF4C00;
+            --accent: #FFCC00;
+        }
+        
+        .tail-container {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .logo-font {
+            font-family: 'Playfair Display', serif;
+        }
 
-    body {
-      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #fefaf5;
-      color: #1e1a2f;
-      scroll-behavior: smooth;
-    }
+        .hero-bg {
+            background: linear-gradient(135deg, #FF4C00 0%, #FF8C00 50%, #FFEA00 100%);
+        }
 
-    /* Header */
-    header {
-      background: #2c1a2e;
-      background: linear-gradient(135deg, #2c1a2e 0%, #1f0e21 100%);
-      color: white;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #FFCC00;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
 
-    nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+        .logo-svg {
+            filter: drop-shadow(0 20px 25px rgb(255 78 0 / 0.4));
+        }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgb(255 78 0 / 0.25);
+        }
 
-    .logo-img {
-      height: 50px;
-      width: auto;
-      border-radius: 12px;
-    }
+        .section-header {
+            position: relative;
+        }
+        
+        .section-header:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #FF4C00, #FFCC00);
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-    .logo-text {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-    .logo-text span {
-      background: linear-gradient(135deg, #f7c873, #ffd966);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .logo-text small {
-      font-size: 0.7rem;
-      display: block;
-      color: #f7c873;
-    }
+        .hero-text {
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: #f5e6d3;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-    .nav-links a:hover {
-      color: #ffda88;
-    }
-
-    /* Hero Section with YOUR bg.jpg image */
-    .hero {
-      position: relative;
-      background-image: url('bg.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      color: white;
-      text-align: center;
-      padding: 7rem 2rem;
-      min-height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    /* Dark overlay to make text readable */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 1;
-    }
-    
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .hero h1 {
-      font-size: 3.5rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.5px;
-    }
-    .hero h1 span {
-      color: #ffd966;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      margin: 1rem auto;
-      opacity: 0.95;
-    }
-    .verse {
-      font-style: italic;
-      background: rgba(255,255,200,0.15);
-      display: inline-block;
-      padding: 0.5rem 1.5rem;
-      border-radius: 60px;
-      margin-top: 1rem;
-      font-size: 1rem;
-      backdrop-filter: blur(5px);
-    }
-    .btn-worship {
-      background: #ffc857;
-      color: #2c1a2e;
-      padding: 0.9rem 2.2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin-top: 1.8rem;
-      cursor: pointer;
-      display: inline-block;
-      text-decoration: none;
-      transition: 0.2s;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
-    .btn-worship:hover {
-      background: #ffbf2e;
-      transform: scale(1.02);
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 3rem 2rem;
-    }
-    .section-title {
-      font-size: 2.2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #2c1a2e;
-      position: relative;
-    }
-    .section-title:after {
-      content: '';
-      display: block;
-      width: 70px;
-      height: 4px;
-      background: #ffc857;
-      margin: 0.6rem auto 0;
-      border-radius: 4px;
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
-    .card {
-      background: white;
-      border-radius: 28px;
-      box-shadow: 0 18px 35px rgba(0,0,0,0.05);
-      padding: 1.8rem;
-      text-align: center;
-      width: 270px;
-      transition: all 0.3s;
-      border-bottom: 4px solid #ffc857;
-    }
-    .card:hover {
-      transform: translateY(-8px);
-    }
-    .card-icon {
-      font-size: 2.8rem;
-      margin-bottom: 0.7rem;
-    }
-    .card h3 {
-      font-size: 1.6rem;
-      margin-bottom: 0.7rem;
-      color: #2c1a2e;
-    }
-    .time {
-      font-weight: 700;
-      color: #b95f25;
-      margin: 0.8rem 0;
-    }
-
-    .schedule-box {
-      background: #fff5e9;
-      border-radius: 36px;
-      padding: 2rem;
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.03);
-    }
-    .schedule-item {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding: 1rem 0;
-      border-bottom: 1px solid #ffe0bf;
-      font-size: 1.1rem;
-    }
-    .day {
-      font-weight: 700;
-      color: #a6430e;
-    }
-    .highlight {
-      background: #ffefd6;
-      border-radius: 40px;
-      padding: 0.8rem;
-      margin-top: 1rem;
-    }
-
-    .about-card {
-      background: #2c1a2e;
-      color: white;
-      border-radius: 42px;
-      padding: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
-    .address {
-      background: #faeecb;
-      color: #2c1a2e;
-      padding: 1.5rem;
-      border-radius: 32px;
-      text-align: center;
-      flex: 1;
-    }
-    .worship-vision {
-      flex: 2;
-    }
-
-    .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 36px;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.05);
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      margin: 0.5rem 0 1rem;
-      border: 1px solid #eeddcc;
-      border-radius: 50px;
-      font-family: inherit;
-    }
-    textarea {
-      border-radius: 28px;
-    }
-    button {
-      background: #ffc857;
-      border: none;
-      padding: 0.8rem;
-      width: 100%;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    footer {
-      background: #1f0e21;
-      color: #e2cfb3;
-      text-align: center;
-      padding: 2rem;
-      margin-top: 2rem;
-    }
-    
-    @media (max-width: 750px) {
-      .hero h1 { font-size: 2.2rem; }
-      .nav-links { gap: 1rem; }
-      .logo-img { height: 40px; }
-      .logo-text { font-size: 1.2rem; }
-      .hero {
-        background-attachment: scroll;
-        padding: 4rem 1rem;
-      }
-    }
-  </style>
+        .nav-bar {
+            box-shadow: 0 4px 30px rgba(255, 78, 0, 0.15);
+        }
+    </style>
 </head>
-<body>
+<body class="tail-container bg-[#0F0F12] text-white overflow-x-hidden">
+    <!-- NAVBAR -->
+    <nav class="nav-bar fixed top-0 left-0 right-0 z-50 bg-[#0F0F12]/95 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="relative group">
+                    <!-- Logo SVG -->
+                    <svg id="logo" width="72" height="72" viewBox="0 0 300 300" class="logo-svg" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="glow" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+                                <stop offset="0%" stop-color="#FF4C00" stop-opacity="1"/>
+                                <stop offset="60%" stop-color="#FF8C00" stop-opacity="1"/>
+                                <stop offset="100%" stop-color="#FFEA00" stop-opacity="1"/>
+                            </radialGradient>
+                            <radialGradient id="inner" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                <stop offset="0%" stop-color="#FF4C00" stop-opacity="1"/>
+                                <stop offset="100%" stop-color="#FFCC00" stop-opacity="1"/>
+                            </radialGradient>
+                        </defs>
+                        
+                        <!-- Outer outer glow circle (fringe effect hint) -->
+                        <circle cx="150" cy="150" r="145" fill="#FF4C00" opacity="0.9"/>
+                        
+                        <!-- Main orange circle with border -->
+                        <circle cx="150" cy="150" r="130" fill="url(#inner)" stroke="#FFFFFF" stroke-width="18" stroke-opacity="0.95"/>
+                        
+                        <!-- Inner inner circle for 3D pop effect -->
+                        <circle cx="150" cy="150" r="88" fill="#FF4C00" stroke="#FFFFFF" stroke-width="4" stroke-opacity="0.85"/>
+                        
+                        <!-- Central white stylized symbol (anchor + Y/YC element) -->
+                        <!-- Top crown/wings element -->
+                        <polygon points="148,45 148,72 138,95 162,95 152,72 152,45" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.9"/>
+                        
+                        <!-- Central small circle -->
+                        <circle cx="148" cy="148" r="14" fill="#FFFFFF" fill-opacity="0.8"/>
+                        
+                        <!-- Central stylized anchor stem -->
+                        <path d="M148,148 Q148,92 148,148 Q148,148 148,148 Z" fill="#FFFFFF" fill-opacity="0.95" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.9"/>
+                        
+                        <!-- Lower curved stylized Y/YC element -->
+                        <path d="M148,148 Q148,178 148,148 Q148,148 148,148 Z" fill="#FFFFFF" fill-opacity="0.95" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.9"/>
+                        
+                    </svg>
+                </div>
+                <div>
+                    <span class="logo-font text-3xl font-bold tracking-tighter text-white">JESUS</span>
+                    <span class="logo-font text-3xl font-bold tracking-tighter bg-gradient-to-r from-[#FFCC00] to-[#FF4C00] bg-clip-text text-transparent">YOUTH</span>
+                </div>
+            </div>
 
-<header>
-  <nav>
-    <div class="logo-container">
-      <img src="Untitled356_20260315222611.png" alt="Jesus Youth KMC Logo" class="logo-img" onerror="this.style.display='none'">
-      <div class="logo-text">
-        JESUS YOUTH <span>KMC</span>
-        <small>Worship · Word · Witness</small>
-      </div>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#worship">Worship</a></li>
-      <li><a href="#schedule">Schedule</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Join</a></li>
-    </ul>
-  </nav>
-</header>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+                <a href="#home" onclick="smoothScrollTo('home')" class="nav-link text-white hover:text-[#FFCC00]">HOME</a>
+                <a href="#about" onclick="smoothScrollTo('about')" class="nav-link text-white hover:text-[#FFCC00]">ABOUT</a>
+                <a href="#services" onclick="smoothScrollTo('services')" class="nav-link text-white hover:text-[#FFCC00]">SERVICES</a>
+                <a href="#events" onclick="smoothScrollTo('events')" class="nav-link text-white hover:text-[#FFCC00]">EVENTS</a>
+                <a href="#join" onclick="smoothScrollTo('join')" class="nav-link text-white hover:text-[#FFCC00]">JOIN US</a>
+            </div>
 
-<section id="home">
-  <div class="hero">
-    <div class="hero-content">
-      <h1><span>JESUS YOUTH KMC</span></h1>
-      <p>Lifting His name high — every Wednesday 4:30 PM<br> @ St. Luke Convent, Near Medical College Bus Stand</p>
-      <div class="verse">🎵 "Let everything that has breath praise the Lord" — Psalm 150:6</div>
-      <a href="#contact" class="btn-worship">✝️ I want to join worship</a>
-    </div>
-  </div>
-</section>
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-4">
+                <a href="#" onclick="alert('This feature is coming soon!')" 
+                   class="px-6 py-2.5 text-sm font-semibold border border-white/30 hover:border-white/70 rounded-full transition-colors">
+                    LOGIN
+                </a>
+                <button onclick="smoothScrollTo('join')" 
+                        class="px-6 py-2.5 bg-[#FFCC00] hover:bg-white text-[#0F0F12] text-sm font-bold rounded-full transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                    <span>JOIN NOW</span>
+                </button>
+                
+                <!-- Mobile Hamburger -->
+                <button id="mobile-menu-btn"
+                        class="md:hidden text-2xl text-white focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
 
-<section id="worship" class="container">
-  <h2 class="section-title">🙌 Worship Nights & More</h2>
-  <div class="cards">
-    <div class="card">
-      <div class="card-icon">🎸</div>
-      <h3>Live Praise</h3>
-      <p>Acoustic & full band worship — contemporary and hymns.</p>
-      <div class="time">Every Wednesday · 4:30 PM</div>
-    </div>
-    <div class="card">
-      <div class="card-icon">📖</div>
-      <h3>Bible & Prayer</h3>
-      <p>Deep dive into God's Word + intercession for our city.</p>
-      <div class="time">Wednesdays after worship</div>
-    </div>
-    <div class="card">
-      <div class="card-icon">🤝</div>
-      <h3>Youth Connect</h3>
-      <p>Testimonies, snacks and building godly friendships.</p>
-      <div class="time">Fellowship till 6:30 PM</div>
-    </div>
-  </div>
-</section>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0F0F12] border-t border-white/10">
+            <div class="px-6 py-8 flex flex-col gap-6 text-lg font-medium">
+                <a href="#home" onclick="toggleMobileMenu()" class="nav-link">HOME</a>
+                <a href="#about" onclick="toggleMobileMenu()" class="nav-link">ABOUT US</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="nav-link">SERVICES</a>
+                <a href="#events" onclick="toggleMobileMenu()" class="nav-link">UPCOMING EVENTS</a>
+                <a href="#join" onclick="toggleMobileMenu()" class="nav-link">JOIN THE FAMILY</a>
+                <div class="pt-6 border-t border-white/10 flex gap-4">
+                    <a href="#" class="flex-1 text-center py-3 border border-white/30 rounded-xl">LOGIN</a>
+                    <a href="#" class="flex-1 text-center py-3 bg-[#FFCC00] text-[#0F0F12] rounded-xl font-bold">JOIN NOW</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<section id="schedule" class="container">
-  <h2 class="section-title">📅 Weekly Rhythm</h2>
-  <div class="schedule-box">
-    <div class="schedule-item"><span class="day">🌸 Wednesday (Main Meeting)</span><span>4:30 PM – 6:30 PM @ St. Luke Convent</span></div>
-    <div class="schedule-item"><span class="day">🎤 Worship Practice</span><span>Sunday 3:00 PM (Band & singers welcome)</span></div>
-    <div class="schedule-item"><span class="day">🙏 Early Morning Prayer</span><span>Saturday 7 AM (Zoom + Onsite)</span></div>
-    <div class="highlight">✨ Special monthly worship night: First Friday of every month — 7 PM</div>
-  </div>
-</section>
+    <!-- HERO -->
+    <header id="home" class="hero-bg min-h-screen flex items-center relative pt-20">
+        <div class="absolute inset-0 bg-[radial-gradient(at_bottom_right,#00000088_30%,transparent_70%)]"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full text-sm font-medium border border-white/20">
+                    <div class="w-2 h-2 bg-[#FFCC00] rounded-full animate-pulse"></div>
+                    <span>CURRENTLY ACTIVE • 2026</span>
+                </div>
+                
+                <h1 class="hero-text text-6xl md:text-7xl font-bold leading-none tracking-tighter">
+                    JESUS<br>YOUTH<br><span class="bg-gradient-to-r from-white via-[#FFCC00] to-white bg-clip-text text-transparent">KMC</span>
+                </h1>
+                
+                <p class="text-xl text-white/90 max-w-md">
+                    Igniting faith, building community, and transforming lives through Christ-centered youth ministry.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="smoothScrollTo('about')" 
+                            class="px-10 py-6 bg-white text-[#0F0F12] font-bold text-lg rounded-2xl flex items-center gap-3 hover:scale-105 transition-transform group">
+                        <span>OUR MISSION</span>
+                        <i class="fa-solid fa-arrow-right group-active:rotate-45 transition-transform"></i>
+                    </button>
+                    <button onclick="smoothScrollTo('join')" 
+                            class="px-10 py-6 border-2 border-white/70 hover:border-white font-medium text-lg rounded-2xl flex items-center gap-3 transition-all">
+                        JOIN THE MOVEMENT
+                    </button>
+                </div>
+                
+                <div class="flex items-center gap-8 pt-6">
+                    <div class="flex -space-x-4">
+                        <div class="w-9 h-9 bg-white rounded-full border-2 border-[#0F0F12] overflow-hidden">
+                            <img src="https://picsum.photos/id/64/128/128" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div class="w-9 h-9 bg-white rounded-full border-2 border-[#0F0F12] overflow-hidden">
+                            <img src="https://picsum.photos/id/201/128/128" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div class="w-9 h-9 bg-white rounded-full border-2 border-[#0F0F12] overflow-hidden">
+                            <img src="https://picsum.photos/id/251/128/128" alt="" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-[#FFCC00]">4,872</div>
+                        <div class="text-sm uppercase tracking-widest">Youth connected with Jesus</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hero Visual -->
+            <div class="relative hidden md:flex justify-center">
+                <div class="relative">
+                    <!-- Floating logo -->
+                    <div class="logo-svg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-75">
+                        <svg width="280" height="280" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="glow" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#FF4C00" stop-opacity="1"/>
+                                    <stop offset="60%" stop-color="#FF8C00" stop-opacity="1"/>
+                                    <stop offset="100%" stop-color="#FFEA00" stop-opacity="1"/>
+                                </radialGradient>
+                                <radialGradient id="inner" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#FF4C00" stop-opacity="1"/>
+                                    <stop offset="100%" stop-color="#FFCC00" stop-opacity="1"/>
+                                </radialGradient>
+                            </defs>
+                            
+                            <circle cx="150" cy="150" r="130" fill="url(#inner)" stroke="#FFFFFF" stroke-width="18" stroke-opacity="0.95"/>
+                            <circle cx="150" cy="150" r="88" fill="#FF4C00" stroke="#FFFFFF" stroke-width="4" stroke-opacity="0.85"/>
+                            
+                            <!-- Central symbol -->
+                            <polygon points="148,45 148,72 138,95 162,95 152,72 152,45" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.9"/>
+                            <circle cx="148" cy="148" r="14" fill="#FFFFFF" fill-opacity="0.8"/>
+                            <path d="M148,148 Q148,92 148,148 Q148,148 148,148 Z" fill="#FFFFFF" fill-opacity="0.95" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.9"/>
+                            <path d="M148,148 Q148,178 148,148 Q148,148 148,148 Z" fill="#FFFFFF" fill-opacity="0.95" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.9"/>
+                        </svg>
+                    </div>
+                    
+                    <!-- Decorative elements -->
+                    <div class="absolute -top-12 -right-12 bg-white/10 backdrop-blur-3xl p-8 rounded-3xl border border-white/20">
+                        <div class="text-4xl">🙏</div>
+                        <div class="text-xs mt-2 text-white/70">PRAY</div>
+                    </div>
+                    
+                    <div class="absolute -bottom-10 -left-10 bg-white/10 backdrop-blur-3xl p-8 rounded-3xl border border-white/20 rotate-12">
+                        <div class="text-4xl">✨</div>
+                        <div class="text-xs mt-2 text-white/70">WORSHIP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<section id="about" class="container">
-  <h2 class="section-title">📍 Where faith meets passion</h2>
-  <div class="about-card">
-    <div class="worship-vision">
-      <h3 style="color:#ffd966">Jesus Youth KMC Vision</h3>
-      <p>We are a worship-centered Catholic youth community dedicated to raising a generation after God's own heart. Led by young people, for young people — we pray, sing, serve and grow together.</p>
-      <p style="margin-top: 0.8rem;">✔️ Open to all students & young adults<br>✔️ No offerings required — only a hungry heart</p>
-    </div>
-    <div class="address">
-      <h3>📍 Meet at:</h3>
-      <p><strong>St. Luke Convent Hall</strong><br>Near Medical College Bus Stand,<br>KMC Campus Area<br>⬇️ Landmark: Behind the big banyan tree, convent gate</p>
-      <p style="margin-top: 1rem;">🕊️ Contact: Bro. Alwin +91 98765 43210</p>
-    </div>
-  </div>
-</section>
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 flex flex-col items-center gap-2 text-white/60">
+            <div class="text-xs tracking-[3px] font-mono">SCROLL TO DISCOVER</div>
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-white/40 to-transparent"></div>
+        </div>
 
-<section id="contact" class="container">
-  <h2 class="section-title">✍️ Join the worship family</h2>
-  <div class="contact-form">
-    <form id="youthJoinForm">
-      <input type="text" id="name" placeholder="Your name *" required>
-      <input type="email" id="email" placeholder="Email address">
-      <input type="tel" id="phone" placeholder="WhatsApp number (optional)">
-      <select id="interest">
-        <option value="worship">🙌 I want to join worship team</option>
-        <option value="member">💒 Just join the youth group</option>
-        <option value="prayer">🛐 Prayer intercessor</option>
-        <option value="volunteer">🧹 Help with hospitality</option>
-      </select>
-      <textarea rows="2" placeholder="Any prayer request or message..."></textarea>
-      <button type="submit">🚀 Send & receive event updates</button>
-      <p id="formMsg" style="margin-top: 0.8rem; text-align:center;"></p>
-    </form>
-    <p style="text-align:center; margin-top:1.2rem;">✨ <strong>Every Wednesday at 4:30 PM</strong> — Come as you are, leave changed.</p>
-  </div>
-</section>
+        <!-- Floating badges -->
+        <div class="hidden xl:block absolute bottom-20 right-12 bg-white/10 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/10 text-sm flex items-center gap-3">
+            <i class="fa-solid fa-check text-[#FFCC00]"></i>
+            <span>Weekly Youth Meetups</span>
+        </div>
+        <div class="hidden xl:block absolute bottom-32 right-20 bg-white/10 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/10 text-sm flex items-center gap-3">
+            <i class="fa-solid fa-check text-[#FFCC00]"></i>
+            <span>Global Impact</span>
+        </div>
+    </header>
 
-<footer>
-  <p>🔥 JESUS YOUTH KMC — St. Luke Convent, near Medical College Bus Stand</p>
-  <p>📞 +91 98765 43210 | ✉️ jesusyouthkmc@outlook.com | Insta: @jesusyouth_kmc</p>
-  <p style="margin-top: 0.8rem;">© 2025 — Raising worshippers, transforming campuses for Christ</p>
-</footer>
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 bg-[#0F0F12]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-16 items-center">
+                <div class="md:col-span-5">
+                    <div class="sticky top-24">
+                        <div class="uppercase text-[#FFCC00] text-sm font-medium tracking-widest mb-3">WHO WE ARE</div>
+                        <h2 class="text-5xl font-bold leading-none tracking-tighter section-header">
+                            Building a<br>generation<br>of world-changers
+                        </h2>
+                        <div class="mt-10 text-lg text-white/80 max-w-md">
+                            Jesus Youth KMC is a vibrant Christian youth organization committed to faith, fellowship, and making a lasting impact in our community and beyond.
+                        </div>
+                        
+                        <div class="mt-12 flex items-center gap-8">
+                            <div>
+                                <div class="text-4xl font-bold text-white">12</div>
+                                <div class="text-sm uppercase">Years of impact</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-bold text-white">87</div>
+                                <div class="text-sm uppercase">% Growth</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-bold text-white">45</div>
+                                <div class="text-sm uppercase">Countries reached</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-7">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div class="bg-white/5 border border-white/10 rounded-3xl p-8 card-hover">
+                            <div class="w-12 h-12 bg-[#FF4C00] rounded-2xl flex items-center justify-center text-3xl mb-6">🌍</div>
+                            <h3 class="text-2xl font-semibold mb-3">Mission-Driven</h3>
+                            <p class="text-white/70">We exist to glorify God by equipping young people to live out their faith boldly in every area of life.</p>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-3xl p-8 card-hover">
+                            <div class="w-12 h-12 bg-[#FFCC00] rounded-2xl flex items-center justify-center text-3xl mb-6">👥</div>
+                            <h3 class="text-2xl font-semibold mb-3">Community Focused</h3>
+                            <p class="text-white/70">Deep friendships, meaningful worship, and authentic relationships that last a lifetime.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script>
-  document.getElementById('youthJoinForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const nameField = document.getElementById('name');
-    const name = nameField.value.trim();
-    if(name === "") {
-      document.getElementById('formMsg').innerHTML = '❌ Please enter your name.';
-      return;
-    }
-    document.getElementById('formMsg').innerHTML = '✅ Thank you ' + name + '! We\'ll send you Wednesday worship details. God bless you. 🙏';
-    this.reset();
-    setTimeout(() => {
-      document.getElementById('formMsg').innerHTML = '';
-    }, 5000);
-  });
-</script>
+    <!-- SERVICES / FOCUS AREAS -->
+    <section id="services" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="px-4 py-1.5 bg-white/5 text-[#FFCC00] text-xs font-medium rounded-full">OUR CORE PROGRAMS</span>
+                <h2 class="text-5xl font-bold mt-6 tracking-tight">Faith in Action</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white/5 rounded-3xl p-8 card-hover border border-white/5">
+                    <div class="text-5xl mb-6">🙏</div>
+                    <h3 class="text-2xl font-semibold mb-3">Daily Devotion</h3>
+                    <p class="text-white/70">Morning and evening devotionals, small group Bible studies, and personal prayer times.</p>
+                    <a href="#" class="text-[#FFCC00] text-sm font-medium mt-6 inline-flex items-center gap-2">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-white/5 rounded-3xl p-8 card-hover border border-white/5">
+                    <div class="text-5xl mb-6">🎤</div>
+                    <h3 class="text-2xl font-semibold mb-3">Worship &amp; Music</h3>
+                    <p class="text-white/70">Contemporary worship nights, choir rehearsals, and opportunities to serve in leading.</p>
+                    <a href="#" class="text-[#FFCC00] text-sm font-medium mt-6 inline-flex items-center gap-2">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-white/5 rounded-3xl p-8 card-hover border border-white/5">
+                    <div class="text-5xl mb-6">💪</div>
+                    <h3 class="text-2xl font-semibold mb-3">Service &amp; Outreach</h3>
+                    <p class="text-white/70">Community service projects, mission trips, and ways to love others as Christ loves us.</p>
+                    <a href="#" class="text-[#FFCC00] text-sm font-medium mt-6 inline-flex items-center gap-2">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UPCOMING EVENTS -->
+    <section id="events" class="py-24 bg-[#0F0F12]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="uppercase text-xs font-medium tracking-widest text-[#FFCC00]">CALENDAR</span>
+                    <h2 class="text-5xl font-bold">Upcoming Events</h2>
+                </div>
+                <a href="#" onclick="alert('Event calendar coming soon!')" class="text-[#FFCC00] font-medium flex items-center gap-2 text-sm">
+                    VIEW FULL CALENDAR <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Event 1 -->
+                <div class="bg-white/5 rounded-3xl overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-amber-500 relative">
+                        <div class="absolute top-6 left-6 bg-black/70 text-xs font-bold px-4 py-1 rounded">JUNE 2026</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-semibold text-xl">Youth Conference 2026</h4>
+                        <p class="text-white/60 text-sm mt-1">Theme: Fire of Revival</p>
+                        <div class="mt-6 text-xs text-white/50">VENUE: KMC Auditorium • Kerala</div>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="bg-white/5 rounded-3xl overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-amber-500 relative">
+                        <div class="absolute top-6 left-6 bg-black/70 text-xs font-bold px-4 py-1 rounded">JULY 2026</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-semibold text-xl">Mission Trip to Mumbai</h4>
+                        <p class="text-white/60 text-sm mt-1">Serving the poor in slums</p>
+                        <div class="mt-6 text-xs text-white/50">12 days • 9 youth • 1 van</div>
+                    </div>
+                </div>
+                
+                <!-- Event 3 -->
+                <div class="bg-white/5 rounded-3xl overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-amber-500 relative">
+                        <div class="absolute top-6 left-6 bg-black/70 text-xs font-bold px-4 py-1 rounded">AUG 2026</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-semibold text-xl">Youth Leadership Summit</h4>
+                        <p class="text-white/60 text-sm mt-1">For future pastors &amp; leaders</p>
+                        <div class="mt-6 text-xs text-white/50">Intensive training sessions</div>
+                    </div>
+                </div>
+                
+                <!-- Event 4 -->
+                <div class="bg-white/5 rounded-3xl overflow-hidden card-hover">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-amber-500 relative">
+                        <div class="absolute top-6 left-6 bg-black/70 text-xs font-bold px-4 py-1 rounded">SEPT 2026</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-semibold text-xl">Youth Night – Worship Revival</h4>
+                        <p class="text-white/60 text-sm mt-1">Live music &amp; prayer vigil</p>
+                        <div class="mt-6 text-xs text-white/50">All-night prayer + worship</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOIN US SECTION -->
+    <section id="join" class="py-24 bg-gradient-to-b from-black to-[#0F0F12]">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="mx-auto w-24 h-24 bg-[#FFCC00] text-[#0F0F12] rounded-3xl flex items-center justify-center text-6xl mb-8">❤️</div>
+            
+            <h2 class="text-5xl font-bold tracking-tighter">Ready to join the movement?</h2>
+            <p class="text-xl text-white/80 mt-6 max-w-2xl mx-auto">
+                Whether you want to volunteer, serve in ministry, or simply grow closer to Jesus, 
+                there’s a place for you in Jesus Youth KMC.
+            </p>
+            
+            <div class="mt-12">
+                <a href="#" onclick="smoothScrollTo('about')" 
+                   class="inline-flex items-center gap-4 group bg-white text-[#0F0F12] px-12 py-7 rounded-3xl text-lg font-semibold hover:shadow-2xl hover:shadow-[#FFCC00]/30 transition-all">
+                    <span class="group-hover:-translate-y-0.5 transition">BECOME A MEMBER</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition"></i>
+                </a>
+            </div>
+            
+            <div class="mt-16 text-sm text-white/40">
+                No experience needed • Open to all denominations • Free to join
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-20 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-y-12">
+                <div class="md:col-span-5">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div id="logo-footer" class="logo-svg">
+                            <svg width="48" height="48" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <radialGradient id="glowf" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#FF4C00" stop-opacity="1"/>
+                                        <stop offset="60%" stop-color="#FF8C00" stop-opacity="1"/>
+                                        <stop offset="100%" stop-color="#FFEA00" stop-opacity="1"/>
+                                    </radialGradient>
+                                    <radialGradient id="innerf" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#FF4C00" stop-opacity="1"/>
+                                        <stop offset="100%" stop-color="#FFCC00" stop-opacity="1"/>
+                                    </radialGradient>
+                                </defs>
+                                
+                                <circle cx="150" cy="150" r="130" fill="url(#innerf)" stroke="#FFFFFF" stroke-width="12" stroke-opacity="0.95"/>
+                                <circle cx="150" cy="150" r="88" fill="#FF4C00" stroke="#FFFFFF" stroke-width="3" stroke-opacity="0.85"/>
+                                
+                                <polygon points="148,45 148,72 138,95 162,95 152,72 152,45" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.9"/>
+                                <circle cx="148" cy="148" r="12" fill="#FFFFFF" fill-opacity="0.8"/>
+                                <path d="M148,148 Q148,92 148,148 Q148,148 148,148 Z" fill="#FFFFFF" fill-opacity="0.95" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.9"/>
+                                <path d="M148,148 Q148,178 148,148 Q148,148 148,148 Z" fill="#FFFFFF" fill-opacity="0.95" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.9"/>
+                            </svg>
+                        </div>
+                        <span class="logo-font text-4xl font-bold">JESUS YOUTH KMC</span>
+                    </div>
+                    <p class="text-white/60 max-w-xs">
+                        Where faith meets action. Where young hearts burn for Jesus.
+                    </p>
+                    <div class="mt-8 flex gap-6 text-2xl">
+                        <a href="#" class="hover:text-[#FFCC00] transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="hover:text-[#FFCC00] transition"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="hover:text-[#FFCC00] transition"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <div class="uppercase text-xs font-medium mb-4 text-white/40">QUICK LINKS</div>
+                    <div class="space-y-3 text-sm">
+                        <a href="#" class="block hover:text-white transition">About Us</a>
+                        <a href="#" class="block hover:text-white transition">Our Leaders</a>
+                        <a href="#" class="block hover:text-white transition">Join</a>
+                        <a href="#" class="block hover:text-white transition">Give</a>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <div class="uppercase text-xs font-medium mb-4 text-white/40">RESOURCES</div>
+                    <div class="space-y-3 text-sm">
+                        <a href="#" class="block hover:text-white transition">Devotionals</a>
+                        <a href="#" class="block hover:text-white transition">Blog</a>
+                        <a href="#" class="block hover:text-white transition">Youth Library</a>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-3">
+                    <div class="bg-white/5 rounded-3xl p-8">
+                        <div class="text-xs uppercase tracking-widest mb-4">STAY CONNECTED</div>
+                        <div class="flex gap-3">
+                            <input type="email" placeholder="your@email.com" 
+                                   class="bg-black border border-white/20 focus:border-[#FFCC00] rounded-2xl px-5 py-4 text-sm w-full outline-none">
+                            <button class="bg-[#FFCC00] text-[#0F0F12] px-8 rounded-2xl font-medium">SUBSCRIBE</button>
+                        </div>
+                        <div class="text-[10px] text-white/40 mt-6">We never share your email</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 mt-20 pt-8 text-center text-xs text-white/30 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>© 2026 Jesus Youth KMC • All rights reserved</div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white">Privacy</a>
+                    <a href="#" class="hover:text-white">Terms</a>
+                    <a href="#" class="hover:text-white">Contact</a>
+                </div>
+                <div>Designed with love for the youth of Kerala</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script already loaded via CDN
+        
+        function smoothScrollTo(section) {
+            const element = document.getElementById(section);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            const icon = document.getElementById('mobile-menu-btn');
+            if (menu.classList.contains('hidden')) {
+                icon.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+            } else {
+                icon.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+            }
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!menu.contains(e.target) && e.target !== btn) {
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                    btn.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+                }
+            }
+        });
+        
+        // Keyboard escape for mobile menu
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                const menu = document.getElementById('mobile-menu');
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                    document.getElementById('mobile-menu-btn').innerHTML = `<i class="fa-solid fa-bars"></i>`;
+                }
+            }
+        });
+        
+        // Logo animation on hover
+        const logo = document.getElementById('logo');
+        logo.addEventListener('mouseenter', () => {
+            logo.style.transform = 'scale(1.08)';
+            logo.style.transition = 'transform 0.3s ease';
+        });
+        logo.addEventListener('mouseleave', () => {
+            logo.style.transform = 'scale(1)';
+        });
+        
+        // Initialize Tailwind
+        console.log('%c✅ Jesus Youth KMC Homepage ready!', 'color: #FFCC00; font-family: monospace;');
+    </script>
 </body>
 </html>
