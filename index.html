@@ -40,6 +40,44 @@
       pointer-events: none;
     }
     
+    /* Background Logo Watermark - Large, to the side, half visible */
+    .bg-logo {
+      position: fixed;
+      bottom: -50px;
+      right: -100px;
+      width: 70%;
+      max-width: 800px;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+      object-fit: contain;
+    }
+    
+    /* For different screen sizes, adjust position */
+    @media (min-width: 768px) {
+      .bg-logo {
+        right: -150px;
+        bottom: -80px;
+        width: 60%;
+        opacity: 0.12;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .bg-logo {
+        right: -200px;
+        bottom: -100px;
+        width: 50%;
+        opacity: 0.1;
+      }
+    }
+    
+    /* Ensure content stays above background logo */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+    
     /* Glass morphism header with curved edges */
     .curved-glass-header {
       background: rgba(255, 140, 66, 0.95);
@@ -149,32 +187,12 @@
       background: rgba(255, 107, 53, 0.25);
       transform: scale(1.02);
     }
-    
-    /* Weekly Gathering Section with Background Logo */
-    .gathering-section {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .gathering-bg-logo {
-      position: absolute;
-      top: 50%;
-      right: -20%;
-      transform: translateY(-50%);
-      width: 60%;
-      max-width: 500px;
-      opacity: 0.12;
-      pointer-events: none;
-      z-index: 0;
-    }
-    
-    .gathering-content {
-      position: relative;
-      z-index: 2;
-    }
   </style>
 </head>
 <body class="glossy-orange-bg">
+  
+  <!-- Background Watermark Logo - Large, to the side, half visible, original colors -->
+  <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo">
 
   <!-- Floating header with curved edges -->
   <header class="fixed top-0 left-0 w-full curved-glass-header z-50 transition-all duration-300">
@@ -228,7 +246,7 @@
   <!-- Overlay -->
   <div id="menuOverlay" class="menu-overlay"></div>
 
-  <main>
+  <main class="content-wrapper">
     <!-- HERO SECTION with Image -->
     <section id="home" class="min-h-screen flex items-center relative pt-20">
       <div class="max-w-6xl mx-auto px-5 md:px-8 py-8 md:py-12 w-full">
@@ -271,12 +289,9 @@
       </div>
     </section>
 
-    <!-- WEEKLY GATHERING with Background Logo -->
-    <section id="gathering" class="py-20 md:py-28 gathering-section">
-      <!-- Background Logo - positioned to the right, half visible -->
-      <img src="logo.png" alt="Jesus Youth KMC" class="gathering-bg-logo">
-      
-      <div class="max-w-5xl mx-auto px-5 md:px-8 gathering-content">
+    <!-- WEEKLY GATHERING -->
+    <section id="gathering" class="py-20 md:py-28">
+      <div class="max-w-5xl mx-auto px-5 md:px-8">
         <div class="text-center mb-12 fade-up">
           <span class="text-amber-200 text-sm font-semibold tracking-wider">WEEKLY GATHERING</span>
           <h2 class="text-4xl md:text-5xl font-bold mt-2 text-white">Come as you are.</h2>
