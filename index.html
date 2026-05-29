@@ -28,7 +28,6 @@
     .glossy-orange-bg {
       background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 50%, #F25E2C 100%);
       position: relative;
-      min-height: 100vh;
     }
     .glossy-orange-bg::before {
       content: '';
@@ -41,19 +40,19 @@
       pointer-events: none;
     }
     
-    /* Background Logo Watermark - Scrolls with page */
+    /* Background Logo Watermark - Responsive for orientation */
     .bg-logo {
-      position: absolute;
+      position: fixed;
       pointer-events: none;
       z-index: 0;
       object-fit: contain;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     
     /* Default portrait mode */
     @media (orientation: portrait) {
       .bg-logo {
-        top: 300px;
+        bottom: 20px;
         right: -100px;
         width: 70%;
         max-width: 800px;
@@ -64,7 +63,7 @@
     /* Landscape mode adjustments */
     @media (orientation: landscape) {
       .bg-logo {
-        top: 200px;
+        bottom: -50px;
         right: -80px;
         width: 40%;
         max-width: 500px;
@@ -76,7 +75,7 @@
     @media (min-width: 768px) and (orientation: portrait) {
       .bg-logo {
         right: -150px;
-        top: 400px;
+        bottom: 50px;
         width: 60%;
         opacity: 0.12;
       }
@@ -86,7 +85,7 @@
     @media (min-width: 768px) and (orientation: landscape) {
       .bg-logo {
         right: -120px;
-        top: 250px;
+        bottom: -30px;
         width: 35%;
         max-width: 450px;
         opacity: 0.1;
@@ -97,7 +96,7 @@
     @media (min-width: 1024px) {
       .bg-logo {
         right: -200px;
-        top: 500px;
+        bottom: 80px;
         width: 50%;
         opacity: 0.1;
       }
@@ -107,22 +106,16 @@
     @media (min-width: 1024px) and (orientation: landscape) {
       .bg-logo {
         right: -150px;
-        top: 300px;
+        bottom: 40px;
         width: 35%;
         max-width: 500px;
       }
-    }
-    
-    /* Hide logo when scrolled past */
-    .bg-logo.hide {
-      opacity: 0 !important;
     }
     
     /* Ensure content stays above background logo */
     .content-wrapper {
       position: relative;
       z-index: 1;
-      background: transparent;
     }
     
     /* Glass morphism header with curved edges */
@@ -238,7 +231,7 @@
 </head>
 <body class="glossy-orange-bg">
   
-  <!-- Background Watermark Logo - Scrolls with page -->
+  <!-- Background Watermark Logo - Responsive for orientation -->
   <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo" id="backgroundLogo">
 
   <!-- Floating header with curved edges -->
@@ -512,32 +505,53 @@
       link.addEventListener('click', closeMenuFunction);
     });
 
-    // Hide background logo when approaching join section
-    const backgroundLogo = document.getElementById('backgroundLogo');
+    // Scroll-controlled background logo movement
+    const bgLogo = document.getElementById('backgroundLogo');
     const joinSection = document.getElementById('join');
     
-    function checkLogoVisibility() {
-      if (!backgroundLogo || !joinSection) return;
+    function handleLogoScroll() {
+      if (!bgLogo || !joinSection) return;
       
       const joinRect = joinSection.getBoundingClientRect();
-      const logoRect = backgroundLogo.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
+      const windowHeight = window.innerHeight;
+      const joinTop = joinRect.top;
+      const joinBottom = joinRect.bottom;
       
-      // Calculate how far the join section is from the viewport bottom
-      const distanceToJoin = joinRect.top - viewportHeight;
+      // Calculate how close we are to the join section
+      let opacity = 1;
+      let translateY = 0;
       
-      // Hide logo when join section is about to enter the viewport (100px before)
-      if (joinRect.top <= viewportHeight + 100) {
-        backgroundLogo.classList.add('hide');
+      // When join section enters the viewport, start fading and moving the logo
+      if (joinTop < windowHeight && joinBottom > 0) {
+        const scrollProgress = Math.min(1, Math.max(0, (windowHeight - joinTop) / windowHeight));
+        // Fade out as we scroll into the join section
+        opacity = Math.max(0, 1 - (scrollProgress * 1.5));
+        // Move the logo down/away
+        translateY = scrollProgress * 100;
+        
+        bgLogo.style.opacity = opacity * 0.15; // Base opacity is 0.15, multiplied by remaining visibility
+        bgLogo.style.transform = `translateY(${translateY}px)`;
       } else {
-        backgroundLogo.classList.remove('hide');
+        // Restore when not in join section
+        bgLogo.style.opacity = '';
+        bgLogo.style.transform = '';
       }
     }
     
-    // Listen to scroll events
-    window.addEventListener('scroll', checkLogoVisibility);
-    window.addEventListener('resize', checkLogoVisibility);
-    checkLogoVisibility(); // Initial check
+    // Throttle scroll event for performance
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleLogoScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    
+    // Also run on load
+    window.addEventListener('load', handleLogoScroll);
 
     // Intersection Observer for fade-up animation
     const fadeElements = document.querySelectorAll('.fade-up');
