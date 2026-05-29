@@ -28,6 +28,7 @@
     .glossy-orange-bg {
       background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 50%, #F25E2C 100%);
       position: relative;
+      min-height: 100vh;
     }
     .glossy-orange-bg::before {
       content: '';
@@ -40,18 +41,19 @@
       pointer-events: none;
     }
     
-    /* Background Logo Watermark - Responsive for orientation */
+    /* Background Logo Watermark - Scrolls with page */
     .bg-logo {
-      position: fixed;
+      position: absolute;
       pointer-events: none;
       z-index: 0;
       object-fit: contain;
+      transition: opacity 0.5s ease;
     }
     
     /* Default portrait mode */
     @media (orientation: portrait) {
       .bg-logo {
-        bottom: 20px;
+        top: 300px;
         right: -100px;
         width: 70%;
         max-width: 800px;
@@ -62,7 +64,7 @@
     /* Landscape mode adjustments */
     @media (orientation: landscape) {
       .bg-logo {
-        bottom: -50px;
+        top: 200px;
         right: -80px;
         width: 40%;
         max-width: 500px;
@@ -74,7 +76,7 @@
     @media (min-width: 768px) and (orientation: portrait) {
       .bg-logo {
         right: -150px;
-        bottom: 50px;
+        top: 400px;
         width: 60%;
         opacity: 0.12;
       }
@@ -84,7 +86,7 @@
     @media (min-width: 768px) and (orientation: landscape) {
       .bg-logo {
         right: -120px;
-        bottom: -30px;
+        top: 250px;
         width: 35%;
         max-width: 450px;
         opacity: 0.1;
@@ -95,7 +97,7 @@
     @media (min-width: 1024px) {
       .bg-logo {
         right: -200px;
-        bottom: 80px;
+        top: 500px;
         width: 50%;
         opacity: 0.1;
       }
@@ -105,16 +107,22 @@
     @media (min-width: 1024px) and (orientation: landscape) {
       .bg-logo {
         right: -150px;
-        bottom: 40px;
+        top: 300px;
         width: 35%;
         max-width: 500px;
       }
+    }
+    
+    /* Hide logo when scrolled past */
+    .bg-logo.hide {
+      opacity: 0 !important;
     }
     
     /* Ensure content stays above background logo */
     .content-wrapper {
       position: relative;
       z-index: 1;
+      background: transparent;
     }
     
     /* Glass morphism header with curved edges */
@@ -230,8 +238,8 @@
 </head>
 <body class="glossy-orange-bg">
   
-  <!-- Background Watermark Logo - Responsive for orientation -->
-  <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo">
+  <!-- Background Watermark Logo - Scrolls with page -->
+  <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo" id="backgroundLogo">
 
   <!-- Floating header with curved edges -->
   <header class="fixed top-0 left-0 w-full curved-glass-header z-50 transition-all duration-300">
@@ -503,6 +511,33 @@
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
       link.addEventListener('click', closeMenuFunction);
     });
+
+    // Hide background logo when approaching join section
+    const backgroundLogo = document.getElementById('backgroundLogo');
+    const joinSection = document.getElementById('join');
+    
+    function checkLogoVisibility() {
+      if (!backgroundLogo || !joinSection) return;
+      
+      const joinRect = joinSection.getBoundingClientRect();
+      const logoRect = backgroundLogo.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // Calculate how far the join section is from the viewport bottom
+      const distanceToJoin = joinRect.top - viewportHeight;
+      
+      // Hide logo when join section is about to enter the viewport (100px before)
+      if (joinRect.top <= viewportHeight + 100) {
+        backgroundLogo.classList.add('hide');
+      } else {
+        backgroundLogo.classList.remove('hide');
+      }
+    }
+    
+    // Listen to scroll events
+    window.addEventListener('scroll', checkLogoVisibility);
+    window.addEventListener('resize', checkLogoVisibility);
+    checkLogoVisibility(); // Initial check
 
     // Intersection Observer for fade-up animation
     const fadeElements = document.querySelectorAll('.fade-up');
