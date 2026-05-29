@@ -39,6 +39,27 @@
       background: linear-gradient(125deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 40%);
       pointer-events: none;
     }
+    
+    /* Background Logo Watermark */
+    .bg-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 600px;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+      filter: brightness(0) invert(1);
+    }
+    
+    /* Ensure content stays above background logo */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+    
     /* Glass morphism header with curved edges */
     .curved-glass-header {
       background: rgba(255, 140, 66, 0.95);
@@ -46,6 +67,8 @@
       border-radius: 0 0 30px 30px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       border-bottom: 1px solid rgba(255,255,255,0.3);
+      position: relative;
+      z-index: 100;
     }
     /* Card hover effect */
     .card-hover {
@@ -148,13 +171,16 @@
     }
   </style>
 </head>
-<body class="glossy-orange-bg text-white">
+<body class="glossy-orange-bg">
+  
+  <!-- Background Watermark Logo -->
+  <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo">
 
   <!-- Floating header with curved edges -->
   <header class="fixed top-0 left-0 w-full curved-glass-header z-50 transition-all duration-300">
     <div class="max-w-6xl mx-auto px-5 md:px-8 py-3 flex justify-between items-center">
       <!-- Logo Image -->
-      <a href="#home" class="flex items-center">
+      <a href="#home" class="flex items-center relative z-10">
         <img src="logo.png" alt="Jesus Youth KMC Logo" class="h-10 md:h-12 w-auto">
       </a>
       <nav class="hidden md:flex space-x-6 text-sm font-medium">
@@ -202,7 +228,7 @@
   <!-- Overlay -->
   <div id="menuOverlay" class="menu-overlay"></div>
 
-  <main>
+  <main class="content-wrapper">
     <!-- HERO SECTION with Image -->
     <section id="home" class="min-h-screen flex items-center relative pt-20">
       <div class="max-w-6xl mx-auto px-5 md:px-8 py-8 md:py-12 w-full">
@@ -386,24 +412,19 @@
   </main>
 
   <script>
-    // Mobile menu functionality - FIXED
+    // Mobile menu functionality
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const closeMenu = document.getElementById('closeMenu');
     const menuOverlay = document.getElementById('menuOverlay');
 
-    console.log('Menu button:', menuBtn); // Debug to check if button is found
-    console.log('Mobile menu:', mobileMenu); // Debug to check if menu is found
-
     function openMenu() {
-      console.log('Opening menu');
       mobileMenu.classList.add('open');
       menuOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
     function closeMenuFunction() {
-      console.log('Closing menu');
       mobileMenu.classList.remove('open');
       menuOverlay.classList.remove('active');
       document.body.style.overflow = '';
@@ -411,9 +432,6 @@
 
     if (menuBtn) {
       menuBtn.addEventListener('click', openMenu);
-      console.log('Event listener added to menu button');
-    } else {
-      console.log('Menu button not found!');
     }
     
     if (closeMenu) {
