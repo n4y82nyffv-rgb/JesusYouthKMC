@@ -40,53 +40,74 @@
       pointer-events: none;
     }
     
-    /* Background Logo Watermark - positioned relatively to scroll */
+    /* Background Logo Watermark - Responsive for orientation */
     .bg-logo {
-      position: relative;
+      position: fixed;
       pointer-events: none;
       z-index: 0;
       object-fit: contain;
-      display: block;
-      margin-left: auto;
-      margin-right: 0;
-      transition: none;
-    }
-    
-    /* When logo becomes fixed/sticky at the trigger point */
-    .bg-logo.stopped {
-      position: fixed;
-      bottom: auto;
-      top: auto;
-    }
-    
-    /* Logo container */
-    .logo-scroll-container {
-      position: relative;
-      width: 100%;
-      overflow: visible;
-      height: 0;
-      margin-bottom: 0;
     }
     
     /* Default portrait mode */
     @media (orientation: portrait) {
       .bg-logo {
+        bottom: 20px;
+        right: -100px;
         width: 70%;
-        max-width: 600px;
+        max-width: 800px;
         opacity: 0.15;
-        top: 0;
-        right: -80px;
       }
     }
     
     /* Landscape mode adjustments */
     @media (orientation: landscape) {
       .bg-logo {
-        width: 35%;
-        max-width: 400px;
+        bottom: -50px;
+        right: -80px;
+        width: 40%;
+        max-width: 500px;
         opacity: 0.12;
-        right: -60px;
-        top: 0;
+      }
+    }
+    
+    /* Tablet portrait */
+    @media (min-width: 768px) and (orientation: portrait) {
+      .bg-logo {
+        right: -150px;
+        bottom: 50px;
+        width: 60%;
+        opacity: 0.12;
+      }
+    }
+    
+    /* Tablet landscape */
+    @media (min-width: 768px) and (orientation: landscape) {
+      .bg-logo {
+        right: -120px;
+        bottom: -30px;
+        width: 35%;
+        max-width: 450px;
+        opacity: 0.1;
+      }
+    }
+    
+    /* Desktop */
+    @media (min-width: 1024px) {
+      .bg-logo {
+        right: -200px;
+        bottom: 80px;
+        width: 50%;
+        opacity: 0.1;
+      }
+    }
+    
+    /* Desktop landscape override */
+    @media (min-width: 1024px) and (orientation: landscape) {
+      .bg-logo {
+        right: -150px;
+        bottom: 40px;
+        width: 35%;
+        max-width: 500px;
       }
     }
     
@@ -209,9 +230,8 @@
 </head>
 <body class="glossy-orange-bg">
   
-  <div class="logo-scroll-container">
-    <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo" id="backgroundLogo">
-  </div>
+  <!-- Background Watermark Logo - Responsive for orientation -->
+  <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo">
 
   <!-- Floating header with curved edges -->
   <header class="fixed top-0 left-0 w-full curved-glass-header z-50 transition-all duration-300">
@@ -397,7 +417,7 @@
               <i class="fas fa-download"></i> Download Wallpapers
             </a>
           </div>
-          <div class="mt-6 text-sm text-amber-100" id="triggerPoint">* high-res, mobile optimized | free for personal use</div>
+          <div class="mt-6 text-sm text-amber-100">* high-res, mobile optimized | free for personal use</div>
         </div>
       </div>
     </section>
@@ -484,72 +504,6 @@
       link.addEventListener('click', closeMenuFunction);
     });
 
-    // Make logo stop scrolling when it reaches the trigger line
-    const backgroundLogo = document.getElementById('backgroundLogo');
-    const triggerPoint = document.getElementById('triggerPoint');
-    
-    let logoStopped = false;
-    let stopPosition = 0;
-    
-    function handleLogoScroll() {
-      if (!triggerPoint || !backgroundLogo) return;
-      
-      const triggerRect = triggerPoint.getBoundingClientRect();
-      const logoRect = backgroundLogo.getBoundingClientRect();
-      const scrollY = window.scrollY;
-      
-      // Calculate the position where the trigger point meets the logo's original top position
-      const logoOriginalTop = backgroundLogo.offsetTop;
-      const triggerDocumentTop = triggerPoint.offsetTop;
-      
-      // When the trigger point reaches the logo's original position
-      if (triggerRect.top <= logoRect.height && !logoStopped) {
-        // Stop the logo
-        logoStopped = true;
-        stopPosition = scrollY;
-        
-        // Change logo to fixed positioning
-        backgroundLogo.style.position = 'fixed';
-        backgroundLogo.style.top = logoRect.top + 'px';
-        backgroundLogo.style.right = '-80px';
-        
-        // Apply responsive right positioning
-        if (window.innerWidth >= 1024) {
-          backgroundLogo.style.right = '-200px';
-        } else if (window.innerWidth >= 768) {
-          backgroundLogo.style.right = '-150px';
-        } else {
-          backgroundLogo.style.right = '-80px';
-        }
-        
-        backgroundLogo.classList.add('stopped');
-      }
-      
-      // If logo is stopped, keep it fixed in place (don't scroll further)
-      if (logoStopped) {
-        // Logo stays fixed, doesn't move with scroll
-        // This is handled by the CSS position:fixed
-      }
-      
-      // Reset when scrolling back up past the trigger point
-      if (logoStopped && triggerRect.top > logoRect.height) {
-        logoStopped = false;
-        backgroundLogo.style.position = '';
-        backgroundLogo.style.top = '';
-        backgroundLogo.style.right = '';
-        backgroundLogo.classList.remove('stopped');
-      }
-    }
-    
-    // Initial check
-    setTimeout(handleLogoScroll, 100);
-    
-    // Listen for scroll events
-    window.addEventListener('scroll', handleLogoScroll);
-    window.addEventListener('resize', () => {
-      setTimeout(handleLogoScroll, 100);
-    });
-    
     // Intersection Observer for fade-up animation
     const fadeElements = document.querySelectorAll('.fade-up');
     const observer = new IntersectionObserver((entries) => {
