@@ -28,7 +28,6 @@
     .glossy-orange-bg {
       background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 50%, #F25E2C 100%);
       position: relative;
-      min-height: 100vh;
     }
     .glossy-orange-bg::before {
       content: '';
@@ -41,88 +40,53 @@
       pointer-events: none;
     }
     
-    /* Background Logo Watermark - Will be scrolled */
+    /* Background Logo Watermark - positioned relatively to scroll */
     .bg-logo {
-      position: absolute;
+      position: relative;
       pointer-events: none;
       z-index: 0;
       object-fit: contain;
+      display: block;
+      margin-left: auto;
+      margin-right: 0;
       transition: none;
-      will-change: transform;
     }
     
-    /* When logo is fixed/sticky during scroll */
-    .bg-logo.sticky-logo {
+    /* When logo becomes fixed/sticky at the trigger point */
+    .bg-logo.stopped {
       position: fixed;
-    }
-    
-    /* When logo reaches the trigger point, it becomes absolute again */
-    .bg-logo.attached {
-      position: absolute;
       bottom: auto;
       top: auto;
     }
     
-    /* Default portrait mode - absolute positioning */
+    /* Logo container */
+    .logo-scroll-container {
+      position: relative;
+      width: 100%;
+      overflow: visible;
+      height: 0;
+      margin-bottom: 0;
+    }
+    
+    /* Default portrait mode */
     @media (orientation: portrait) {
       .bg-logo {
-        bottom: 20px;
-        right: -100px;
         width: 70%;
-        max-width: 800px;
+        max-width: 600px;
         opacity: 0.15;
+        top: 0;
+        right: -80px;
       }
     }
     
     /* Landscape mode adjustments */
     @media (orientation: landscape) {
       .bg-logo {
-        bottom: -50px;
-        right: -80px;
-        width: 40%;
-        max-width: 500px;
-        opacity: 0.12;
-      }
-    }
-    
-    /* Tablet portrait */
-    @media (min-width: 768px) and (orientation: portrait) {
-      .bg-logo {
-        right: -150px;
-        bottom: 50px;
-        width: 60%;
-        opacity: 0.12;
-      }
-    }
-    
-    /* Tablet landscape */
-    @media (min-width: 768px) and (orientation: landscape) {
-      .bg-logo {
-        right: -120px;
-        bottom: -30px;
         width: 35%;
-        max-width: 450px;
-        opacity: 0.1;
-      }
-    }
-    
-    /* Desktop */
-    @media (min-width: 1024px) {
-      .bg-logo {
-        right: -200px;
-        bottom: 80px;
-        width: 50%;
-        opacity: 0.1;
-      }
-    }
-    
-    /* Desktop landscape override */
-    @media (min-width: 1024px) and (orientation: landscape) {
-      .bg-logo {
-        right: -150px;
-        bottom: 40px;
-        width: 35%;
-        max-width: 500px;
+        max-width: 400px;
+        opacity: 0.12;
+        right: -60px;
+        top: 0;
       }
     }
     
@@ -245,8 +209,9 @@
 </head>
 <body class="glossy-orange-bg">
   
-  <!-- Background Watermark Logo - Will scroll with trigger point -->
-  <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo" id="backgroundLogo">
+  <div class="logo-scroll-container">
+    <img src="logo.png" alt="Jesus Youth KMC" class="bg-logo" id="backgroundLogo">
+  </div>
 
   <!-- Floating header with curved edges -->
   <header class="fixed top-0 left-0 w-full curved-glass-header z-50 transition-all duration-300">
@@ -519,42 +484,34 @@
       link.addEventListener('click', closeMenuFunction);
     });
 
-    // Scroll-triggered movement for background logo - attaches to trigger point
+    // Make logo stop scrolling when it reaches the trigger line
     const backgroundLogo = document.getElementById('backgroundLogo');
     const triggerPoint = document.getElementById('triggerPoint');
     
-    let initialLogoOffset = null;
-    let isAttached = false;
-    let triggerInitialTop = null;
+    let logoStopped = false;
+    let stopPosition = 0;
     
     function handleLogoScroll() {
       if (!triggerPoint || !backgroundLogo) return;
       
       const triggerRect = triggerPoint.getBoundingClientRect();
       const logoRect = backgroundLogo.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+      const scrollY = window.scrollY;
       
-      // Store initial positions on first run
-      if (initialLogoOffset === null) {
-        initialLogoOffset = logoRect.top;
-        triggerInitialTop = triggerRect.top;
-      }
+      // Calculate the position where the trigger point meets the logo's original top position
+      const logoOriginalTop = backgroundLogo.offsetTop;
+      const triggerDocumentTop = triggerPoint.offsetTop;
       
-      // When the trigger point reaches the logo's original position or when it starts overlapping
-      // Make the logo absolute and attach it to the trigger point
-      if (triggerRect.top <= logoRect.height && !isAttached) {
-        // Attach logo to trigger point
-        isAttached = true;
-        backgroundLogo.classList.add('attached');
+      // When the trigger point reaches the logo's original position
+      if (triggerRect.top <= logoRect.height && !logoStopped) {
+        // Stop the logo
+        logoStopped = true;
+        stopPosition = scrollY;
         
-        // Get the trigger point's position relative to the document
-        const triggerOffsetTop = triggerPoint.offsetTop;
-        
-        // Position the logo absolutely near the trigger point
-        backgroundLogo.style.position = 'absolute';
-        backgroundLogo.style.bottom = 'auto';
-        backgroundLogo.style.top = (triggerOffsetTop - backgroundLogo.offsetHeight + 50) + 'px';
-        backgroundLogo.style.right = '-100px';
+        // Change logo to fixed positioning
+        backgroundLogo.style.position = 'fixed';
+        backgroundLogo.style.top = logoRect.top + 'px';
+        backgroundLogo.style.right = '-80px';
         
         // Apply responsive right positioning
         if (window.innerWidth >= 1024) {
@@ -562,37 +519,25 @@
         } else if (window.innerWidth >= 768) {
           backgroundLogo.style.right = '-150px';
         } else {
-          backgroundLogo.style.right = '-100px';
-        }
-      } 
-      
-      // If attached, keep updating the logo's position to scroll with the trigger point
-      if (isAttached && triggerPoint) {
-        const scrollY = window.scrollY;
-        const triggerDocumentTop = triggerPoint.offsetTop;
-        
-        // Calculate new position based on scroll
-        let newTop = triggerDocumentTop - backgroundLogo.offsetHeight + 50 - scrollY;
-        
-        // Stop when logo would go off screen at the top
-        if (newTop <= 50) {
-          newTop = 50;
+          backgroundLogo.style.right = '-80px';
         }
         
-        backgroundLogo.style.top = newTop + 'px';
+        backgroundLogo.classList.add('stopped');
       }
       
-      // Reset when scrolling back up past the trigger
-      if (triggerRect.top > logoRect.height && isAttached) {
-        isAttached = false;
-        backgroundLogo.classList.remove('attached');
+      // If logo is stopped, keep it fixed in place (don't scroll further)
+      if (logoStopped) {
+        // Logo stays fixed, doesn't move with scroll
+        // This is handled by the CSS position:fixed
+      }
+      
+      // Reset when scrolling back up past the trigger point
+      if (logoStopped && triggerRect.top > logoRect.height) {
+        logoStopped = false;
         backgroundLogo.style.position = '';
         backgroundLogo.style.top = '';
-        backgroundLogo.style.bottom = '';
         backgroundLogo.style.right = '';
-        
-        // Force reflow to reset to original CSS
-        backgroundLogo.removeAttribute('style');
+        backgroundLogo.classList.remove('stopped');
       }
     }
     
